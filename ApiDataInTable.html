@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API </title>
+    <!-- API stands for the Application programming Interface Which is used to take the data from the DataBase Bacase the js can't connect to the DB 
+    Dirctly so API is in server side  -->
+    
+</head>
+<body>
+    <div>
+
+       <input type="text"  id= "city_input" placeholder="enter the city">
+      <button id="search_btn">Search</button>
+    
+     </div>
+     <div>
+        <h3 id="city_name">
+            Kathmandu,Lalitpur,Bhaktapur
+        </h3>
+        <h5 id="city_time">LocalTime</h5>
+        <h6 id="city_temp">15</h6>
+     </div>
+
+
+    <script>
+          const btn=document.getElementById("search_btn");
+          const input=document.getElementById("city_input");
+            //API call
+      //here we use the await to handle the promises
+      //fetch return the promise
+
+
+       const cityName=document.getElementById("city_name");
+       const cityTime=document.getElementById("city_time");
+       const cityTemp=document.getElementById("city_temp");
+
+
+          async  function getData(cityName){
+                const promise= await fetch(`http://api.weatherapi.com/v1/current.json?key=f0f8e3c9306e4d39ae9175542241501&q=${cityName}&aqi=yes
+                    `);
+
+            return  await promise.json();
+            }
+
+
+
+          btn.addEventListener("click",async()=>{
+                  const value=input.value;
+                   const result=await getData(value);
+                   cityName.innerText=`${result.location.name},${result.location.country}`;
+                    cityTime.innerText=`${result.location.localtime}`
+                    cityTemp.innerText=`${result.location.temp}`
+        
+                });
+    </script>
+
+   
+</body>
+</html>
